@@ -1,6 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import "./config/db";
+import userRoutes from "./routes/user.routes";
 
 dotenv.config();
 
@@ -10,6 +11,9 @@ app.use(express.json());
 app.get("/health", (req, res) => {
   res.status(200).json({ status: "User Service Running" });
 });
+
+// user service route add
+app.use("/api/users", userRoutes);
 
 const PORT = process.env.PORT || 8080;
 

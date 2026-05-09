@@ -14,6 +14,12 @@ export const insertUser = async (values: any[]) => {
   return await pool.query(query, values);
 };
 
+export const findUserByEmail = async (email: string) => {
+  const query = `SELECT user_id, email, password_hash FROM auth.users WHERE email= $1 `;
+  const result = await pool.query(query, [email]);
+  return result.rows[0];
+};
+
 export const createUserService = async (user: CreateUserInput) => {
   const values = [
     user.email,
