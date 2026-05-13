@@ -3,8 +3,8 @@ import pool from "../config/db";
 export type CreateUserInput = {
   email: string;
   password_hash: string;
-  first_name?: string;
-  last_name?: string;
+  first_name?: string | undefined;
+  last_name?: string | undefined;
 };
 
 export const insertUser = async (values: any[]) => {

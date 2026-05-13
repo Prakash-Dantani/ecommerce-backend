@@ -7,6 +7,9 @@ import {
 import jwt from "jsonwebtoken";
 
 export const createUserService = async (user: CreateUserInput) => {
+  const is_exist_user = await findUserByEmail(user.email);
+  if (is_exist_user) throw new Error("EMAIL_ALREADY_EXISTS");
+
   // hashing password
   const hashedPassword = await bcrypt.hash(user.password_hash, 10);
 
