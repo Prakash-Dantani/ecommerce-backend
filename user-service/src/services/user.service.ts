@@ -5,10 +5,11 @@ import {
   findUserByEmail,
 } from "../repositories/user.repository";
 import jwt from "jsonwebtoken";
+import { AppError } from "../utils/appError";
 
 export const createUserService = async (user: CreateUserInput) => {
   const is_exist_user = await findUserByEmail(user.email);
-  if (is_exist_user) throw new Error("EMAIL_ALREADY_EXISTS");
+  if (is_exist_user) throw new AppError("Email Already Registered.", 409);
 
   // hashing password
   const hashedPassword = await bcrypt.hash(user.password_hash, 10);
@@ -23,11 +24,11 @@ export const createUserService = async (user: CreateUserInput) => {
 export const loginUserService = async (email: string, password: string) => {
   const user = await findUserByEmail(email);
 
-  if (!user) throw new Error("Invalid Credentials, or User Not Exist.");
+  if (!user) throw new AppError("Invalid Credentials, or User Not Exist.", 401);
 
   const isMatch = await bcrypt.compare(password, user.password_hash);
 
-  if (!isMatch) throw new Error("Invalid Credentials.");
+  if (!isMatch) throw new AppError("Invalid Credentials.", 401);
 
   // intilize json web token
   const token = jwt.sign(

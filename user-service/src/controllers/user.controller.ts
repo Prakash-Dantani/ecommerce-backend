@@ -1,9 +1,13 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { createUserService, loginUserService } from "../services/user.service";
 import { registerUserSchema } from "../validations/user.validation";
 import { success } from "zod";
 
-export const registerUser = async (req: Request, res: Response) => {
+export const registerUser = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
   try {
     const validation = registerUserSchema.safeParse(req.body);
 
@@ -13,12 +17,7 @@ export const registerUser = async (req: Request, res: Response) => {
         errors: validation.error.flatten().fieldErrors,
       });
     }
-    // if (!email || !password) {
-    //   return res
-    //     .status(400)
-    //     .json({ message: "Email and PAssword are required." });
-    // }
-    // const validateData = validation.data | {};
+
     const { email, password, first_name, last_name } = validation.data;
 
     const user = await createUserService({
@@ -32,22 +31,15 @@ export const registerUser = async (req: Request, res: Response) => {
       .status(200)
       .json({ message: "User Successfully Registered.", data: user });
   } catch (error: any) {
-    console.error("Register error:", error.message);
-
-    // Handle duplicate email
-    if (error.code === "23505" || error.message === "EMAIL_ALREADY_EXISTS") {
-      return res
-        .status(409)
-        .json({ success: false, message: "Email already exists" });
-    }
-
-    return res.status(500).json({
-      message: "Internal server error",
-    });
+    return next(error);
   }
 };
 
-export const loginUser = async (req: Request, res: Response) => {
+export const loginUser = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
   try {
     const { email, password } = req.body;
     if (!email || !password) {
@@ -59,8 +51,6 @@ export const loginUser = async (req: Request, res: Response) => {
     const userData = await loginUserService(email, password);
     return res.status(200).json({ message: "Login Successfull", userData });
   } catch (error: any) {
-    return res
-      .status(401)
-      .json({ message: error.message || "Invalid Credential" });
+    return next(error);
   }
 };

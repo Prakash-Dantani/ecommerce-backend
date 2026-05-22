@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import "./config/db";
 import userRoutes from "./routes/user.routes";
+import { errorMiddleware } from "./middlewares/error.middleware";
 
 dotenv.config();
 
@@ -14,6 +15,9 @@ app.get("/health", (req, res) => {
 
 // user service route add
 app.use("/api/users", userRoutes);
+
+// Centerlized Error Middleware
+app.use(errorMiddleware);
 
 const PORT = process.env.PORT || 8080;
 
