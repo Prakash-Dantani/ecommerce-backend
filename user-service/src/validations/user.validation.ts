@@ -11,3 +11,8 @@ export const registerUserSchema = z.object({
   first_name: optionalCleanStringValidator("First name"),
   last_name: optionalCleanStringValidator("Last name"),
 });
+
+export const loginUserSchema = z.object({
+  email: emailValidator(),
+  password: passwordValidator(),
+});
