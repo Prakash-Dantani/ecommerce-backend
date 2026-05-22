@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { AppError } from "../utils/appError";
-import { stat } from "node:fs";
+import { apiResponse } from "../utils/apiResponse";
 
 export const errorMiddleware = (
   err: Error,
@@ -9,14 +9,10 @@ export const errorMiddleware = (
   next: NextFunction,
 ) => {
   if (err instanceof AppError) {
-    return res
-      .status(err.statusCode)
-      .json({ success: false, message: err.message });
+    return res.status(err.statusCode).json(apiResponse(false, err.message));
   }
 
   console.log("Unexpected Error : ", err);
 
-  return res
-    .status(500)
-    .json({ success: false, message: "Internal Server Error" });
+  return res.status(500).json(apiResponse(false, "Internal Server Error"));
 };

@@ -5,11 +5,12 @@ import {
   registerUserSchema,
 } from "../validations/user.validation";
 import { success } from "zod";
-import { aysncHandler } from "../utils/asyncHandler";
+import { asyncHandler } from "../utils/asyncHandler";
 import { AppError } from "../utils/appError";
+import { apiResponse } from "../utils/apiResponse";
 
 // User Registration Code start
-export const registerUser = aysncHandler(
+export const registerUser = asyncHandler(
   async (req: Request, res: Response) => {
     const validation = registerUserSchema.safeParse(req.body);
 
@@ -30,18 +31,20 @@ export const registerUser = aysncHandler(
 
     return res
       .status(200)
-      .json({ message: "User Successfully Registered.", data: user });
+      .json(apiResponse(true, "User Successfully Registered.", user));
   },
 );
 
 // Login Code Start
-export const loginUser = aysncHandler(async (req: Request, res: Response) => {
+export const loginUser = asyncHandler(async (req: Request, res: Response) => {
   const validation = loginUserSchema.safeParse(req.body);
   const { email, password } = req.body;
   if (!validation.success) {
-    throw new AppError(validation.error.message, 400);
+    const firstError =
+      validation.error.issues[0]?.message || "Validation failed";
+    throw new AppError(firstError || "Validation Failed.", 400);
   }
 
   const userData = await loginUserService(email, password);
-  return res.status(200).json({ message: "Login Successfull", userData });
+  return res.status(200).json(apiResponse(true, "Login Successfull", userData));
 });
