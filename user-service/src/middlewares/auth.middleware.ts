@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import { JwtPayload } from "../types/auth.types";
-import { AppError } from "../utils/appError";
+import { AppError } from "../utils/AppError";
 
 export interface AuthRequest extends Request {
   user?: JwtPayload;

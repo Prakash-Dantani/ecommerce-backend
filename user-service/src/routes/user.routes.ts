@@ -3,6 +3,7 @@ import { loginUser, registerUser } from "../controllers/user.controller";
 import { authMiddleware, AuthRequest } from "../middlewares/auth.middleware";
 import { asyncHandler } from "../utils/asyncHandler";
 import { apiResponse } from "../utils/apiResponse";
+import { authorize } from "../middlewares/authorize.middleware";
 
 const userRoutes = Router();
 
@@ -13,7 +14,18 @@ userRoutes.get(
   "/profile",
   authMiddleware,
   asyncHandler(async (req: AuthRequest, res: Response) => {
-    return res.json(apiResponse(true, "Protected route accessed", req.user));
+    return res.json(
+      apiResponse(true, "User Profile Successfully viewed", req.user),
+    );
+  }),
+);
+
+userRoutes.get(
+  "/admin-dashboard",
+  authMiddleware,
+  authorize("admin"),
+  asyncHandler(async (req: AuthRequest, res: Response) => {
+    return res.status(200).json(apiResponse(true, "Welcome Admin", req.user));
   }),
 );
 

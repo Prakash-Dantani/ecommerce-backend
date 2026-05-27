@@ -1,13 +1,14 @@
-import { NextFunction, Request, Response } from "express";
-import { createUserService, loginUserService } from "../services/user.service";
+import { Request, Response } from "express";
+import { createUserService } from "../services/user.service";
 import {
   loginUserSchema,
   registerUserSchema,
 } from "../validations/user.validation";
 import { success } from "zod";
 import { asyncHandler } from "../utils/asyncHandler";
-import { AppError } from "../utils/appError";
+import { AppError } from "../utils/AppError";
 import { apiResponse } from "../utils/apiResponse";
+import { loginUserService } from "../services/login.service";
 
 // User Registration Code start
 export const registerUser = asyncHandler(

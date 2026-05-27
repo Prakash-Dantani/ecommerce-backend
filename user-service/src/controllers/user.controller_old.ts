@@ -1,7 +1,8 @@
 import { NextFunction, Request, Response } from "express";
-import { createUserService, loginUserService } from "../services/user.service";
+import { createUserService } from "../services/user.service";
 import { registerUserSchema } from "../validations/user.validation";
 import { success } from "zod";
+import { loginUserService } from "../services/login.service";
 
 export const registerUser = async (
   req: Request,

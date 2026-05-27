@@ -15,7 +15,7 @@ export const insertUser = async (values: any[]) => {
 };
 
 export const findUserByEmail = async (email: string) => {
-  const query = `SELECT user_id, email, password_hash FROM auth.users WHERE email= $1 `;
+  const query = `SELECT user_id, email, password_hash, role FROM auth.users WHERE email= $1 `;
   const result = await pool.query(query, [email]);
   return result.rows[0];
 };
