@@ -30,3 +30,9 @@ export const createUserService = async (user: CreateUserInput) => {
 
   const result = await insertUser(values);
 };
+
+export const findUserById = async (user_id: number) => {
+  const query = `SELECT * FROM auth.users WHERE user_id = $1`;
+  const result = await pool.query(query, [user_id]);
+  return result.rows[0];
+};

@@ -1,8 +1,7 @@
 import { findUserByEmail } from "../repositories/user.repository";
 import { AppError } from "../utils/AppError";
-import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
-import { generateAccessToekn, generateRefreshToken } from "../utils/token.util";
+import { generateAccessToken, generateRefreshToken } from "../utils/token.util";
 import { saveRefreshToken } from "../repositories/refreshToken.repository";
 
 export const loginUserService = async (email: string, password: string) => {
@@ -14,7 +13,7 @@ export const loginUserService = async (email: string, password: string) => {
 
   if (!isMatch) throw new AppError("Invalid Credentials.", 401);
 
-  const accessToken = generateAccessToekn({
+  const accessToken = generateAccessToken({
     user_id: user.user_id,
     email: user.email,
     role: user.role,

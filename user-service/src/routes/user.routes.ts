@@ -4,6 +4,7 @@ import { authMiddleware, AuthRequest } from "../middlewares/auth.middleware";
 import { asyncHandler } from "../utils/asyncHandler";
 import { apiResponse } from "../utils/apiResponse";
 import { authorize } from "../middlewares/authorize.middleware";
+import { refreshAccessToken } from "../controllers/auth.controller";
 
 const userRoutes = Router();
 
@@ -28,5 +29,7 @@ userRoutes.get(
     return res.status(200).json(apiResponse(true, "Welcome Admin", req.user));
   }),
 );
+
+userRoutes.post("/refresh-token", refreshAccessToken);
 
 export default userRoutes;
