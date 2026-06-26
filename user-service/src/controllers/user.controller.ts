@@ -35,17 +35,3 @@ export const registerUser = asyncHandler(
       .json(apiResponse(true, "User Successfully Registered.", user));
   },
 );
-
-// Login Code Start
-export const loginUser = asyncHandler(async (req: Request, res: Response) => {
-  const validation = loginUserSchema.safeParse(req.body);
-  const { email, password } = req.body;
-  if (!validation.success) {
-    const firstError =
-      validation.error.issues[0]?.message || "Validation failed";
-    throw new AppError(firstError || "Validation Failed.", 400);
-  }
-
-  const userData = await loginUserService(email, password);
-  return res.status(200).json(apiResponse(true, "Login Successfull", userData));
-});
