@@ -1,5 +1,3 @@
-import { request } from "node:http";
-
 export const apiResponse = (
   success: boolean,
   message: string,
