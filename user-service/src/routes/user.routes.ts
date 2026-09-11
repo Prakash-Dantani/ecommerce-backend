@@ -28,7 +28,7 @@ userRoutes.get(
 userRoutes.get(
   "/admin-dashboard",
   authMiddleware,
-  authorize("ADMIN"),
+  authorize("ADMIN", "USER"),
   asyncHandler(async (req: AuthRequest, res: Response) => {
     return res.status(200).json(apiResponse(true, "Welcome Admin", req.user));
   }),
