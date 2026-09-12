@@ -23,6 +23,7 @@ category_id BIGSERIAL PRIMARY KEY,
     updated_at TIMESTAMP WITHOUT TIME ZONE,
     updated_by BIGINT,
 
+    is_deleted BOOLEAN NOT NULL DEFAULT FALSE,
     deleted_at TIMESTAMP WITHOUT TIME ZONE,
     deleted_by BIGINT,
 
@@ -60,6 +61,7 @@ brand_id BIGSERIAL PRIMARY KEY,
     updated_at TIMESTAMP WITHOUT TIME ZONE,
     updated_by BIGINT,
 
+    is_deleted BOOLEAN NOT NULL DEFAULT FALSE,
     deleted_at TIMESTAMP WITHOUT TIME ZONE,
     deleted_by BIGINT
 
@@ -67,3 +69,18 @@ brand_id BIGSERIAL PRIMARY KEY,
 
 CREATE INDEX idx_brand_slug
 ON catalog.brands(slug);
+
+#####
+
+created_by BIGINT NOT NULL,
+created_at TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+updated_by BIGINT,
+updated_at TIMESTAMP WITHOUT TIME ZONE,
+
+deleted_by BIGINT,
+deleted_at TIMESTAMP WITHOUT TIME ZONE,
+
+is_deleted BOOLEAN NOT NULL DEFAULT FALSE
+
+######

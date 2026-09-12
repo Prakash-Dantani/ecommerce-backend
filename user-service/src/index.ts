@@ -1,6 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
-import "./config/db";
+import "../../common/config/db";
 import userRoutes from "./routes/user.routes";
 import { errorMiddleware } from "./middlewares/error.middleware";
 

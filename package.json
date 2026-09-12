@@ -1,8 +1,15 @@
 {
   "dependencies": {
-    "pg": "^8.20.0"
+    "bcrypt": "^6.0.0",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
+    "pg": "^8.23.0",
+    "slugify": "^1.6.9",
+    "zod": "^4.6.2"
   },
   "devDependencies": {
+    "@types/node": "^22.20.2",
     "@types/pg": "^8.20.0"
   }
 }
