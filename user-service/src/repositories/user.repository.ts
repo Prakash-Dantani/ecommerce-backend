@@ -20,7 +20,7 @@ export const findUserByEmail = async (email: string) => {
   return result.rows[0];
 };
 
-export const createUserService = async (user: CreateUserInput) => {
+/* export const createUserService = async (user: CreateUserInput) => {
   const values = [
     user.email,
     user.password_hash,
@@ -29,7 +29,7 @@ export const createUserService = async (user: CreateUserInput) => {
   ];
 
   const result = await insertUser(values);
-};
+}; */
 
 export const findUserById = async (user_id: number) => {
   const query = `SELECT * FROM auth.users WHERE user_id = $1`;
