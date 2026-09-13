@@ -1,8 +1,10 @@
 export type categoryType = {
-  category_name: string;
-  description?: string | undefined;
   parent_category_id?: number | undefined;
-  sort_order?: number | null;
+  category_name: string;
+  slug: string;
+  description?: string | undefined;
   image_url?: string | null;
+  sort_order?: number | null;
   is_active?: boolean | true;
+  created_by: number;
 };

@@ -1,12 +1,30 @@
+import { error } from "console";
+import dotenv from "dotenv";
 import express from "express";
+import errorMiddleware from "./middlewares/errorMiddleware";
+import { authMiddleware } from "./middlewares/auth.middleware";
+import { apiResponse } from "./utils/apiResponse";
 const app = express();
+
+dotenv.config();
+app.use(express.json());
 
 app.get("/health", (req, res) => {
   console.log("Product service is running.");
   return res.status(200).json({ message: "Product service is running." });
 });
 
-const PORT = process.env.PORT || 1122;
+app.use(authMiddleware);
+app.post("/category", (req, res) => {
+  return res
+    .status(200)
+    .json(apiResponse(true, "Category Successfully Added", []));
+});
+
+// Using Centerlized Error Middleware
+app.use(errorMiddleware);
+
+const PORT = process.env.PORT || 8081;
 app.listen(PORT, () => {
   console.log(`Product Service Listening on http://localhost:${PORT}`);
 });
