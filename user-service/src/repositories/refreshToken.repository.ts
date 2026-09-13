@@ -1,4 +1,4 @@
-import pool from "../../../common/config/db";
+import pool from "../config/db";
 
 export const saveRefreshToken = async (
   user_id: number,
