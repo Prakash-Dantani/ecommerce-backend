@@ -14,7 +14,7 @@ export const requiredTextValidator = (
     .max(max, { message: `${fieldName} must not exceed ${max} characters` });
 };
 
-export const optionalPositiveNumber = (fieldName: string, minVal = 1) => {
+export const optionalPositiveNumber = (fieldName: string) => {
   return z.number().positive().nullable();
 };
 

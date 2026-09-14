@@ -1,15 +1,16 @@
 import { Request, Response } from "express";
 import {
-  findCategory,
+  findAllCategory,
+  findCategoryById,
+  findCategoryByName,
+  findCategoryBySlug,
   insertCategory,
 } from "../repositories/category.repository";
 import { categoryType } from "../types/category.type";
 import { AppError } from "../utils/AppError";
 
-import { createSlug } from "../utils/createSlug";
-
 export const categoryService = async (category: categoryType) => {
-  const isCategoryExist = await findCategory(category.category_name);
+  const isCategoryExist = await findCategoryByName(category.category_name);
   if (isCategoryExist) throw new AppError("Category already exist", 409);
 
   category = {
@@ -19,6 +20,21 @@ export const categoryService = async (category: categoryType) => {
   return result.rows[0];
 };
 
-// export const findCategory = (category_name: string) => {
+export const findAllCategoryService = async () => {
+  const result = await findAllCategory();
+  return result.rows;
+};
 
-// };
+export const findCategoryBy = async (req: Request) => {
+  var result;
+  if (req.params.by === "name")
+    result = await findCategoryByName(String(req.params.value));
+
+  if (req.params.by === "slug")
+    result = await findCategoryBySlug(String(req.params.value));
+
+  if (req.params.by === "id")
+    result = await findCategoryById(Number(req.params.value));
+
+  return result?.rows;
+};

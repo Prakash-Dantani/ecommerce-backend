@@ -4,6 +4,7 @@ import express from "express";
 import errorMiddleware from "./middlewares/errorMiddleware";
 import { authMiddleware } from "./middlewares/auth.middleware";
 import { apiResponse } from "./utils/apiResponse";
+import categoryRouter from "./routes/category.routes";
 const app = express();
 
 dotenv.config();
@@ -14,7 +15,7 @@ app.get("/health", (req, res) => {
   return res.status(200).json({ message: "Product service is running." });
 });
 
-=
+app.use("/api/category", categoryRouter);
 // Using Centerlized Error Middleware
 app.use(errorMiddleware);
 
