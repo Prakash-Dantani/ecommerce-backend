@@ -5,7 +5,8 @@ export const requiredTextValidator = (
   min = 2,
   max = 255,
 ) => {
-  z.string()
+  return z
+    .string()
     .trim()
     .min(min, {
       message: `${fieldName} must be at least ${min} characters`,
@@ -13,6 +14,14 @@ export const requiredTextValidator = (
     .max(max, { message: `${fieldName} must not exceed ${max} characters` });
 };
 
-export const opetionalPositiveNumber = (fieldName: string, minVal = 1) => {
-  z.number().positive().nullable();
+export const optionalPositiveNumber = (fieldName: string, minVal = 1) => {
+  return z.number().positive().nullable();
+};
+
+export const optionaltextValidator = (field_name: string) => {
+  return z.string().optional();
+};
+
+export const urlValidator = () => {
+  return z.url().nullable();
 };

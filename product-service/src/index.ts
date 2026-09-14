@@ -14,13 +14,7 @@ app.get("/health", (req, res) => {
   return res.status(200).json({ message: "Product service is running." });
 });
 
-app.use(authMiddleware);
-app.post("/category", (req, res) => {
-  return res
-    .status(200)
-    .json(apiResponse(true, "Category Successfully Added", []));
-});
-
+=
 // Using Centerlized Error Middleware
 app.use(errorMiddleware);
 

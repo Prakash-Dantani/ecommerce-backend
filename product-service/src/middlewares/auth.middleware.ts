@@ -1,14 +1,14 @@
-import { NextFunction, Request, Response } from "express";
+import { NextFunction, Request, RequestHandler, Response } from "express";
 import { JwtPayload } from "../types/auth.types";
 import { AppError } from "../utils/AppError";
 import jwt from "jsonwebtoken";
 
-export interface AuthRequest extends Request {
-  user: JwtPayload;
-}
+// export interface AuthRequest extends Request {
+//   user: JwtPayload;
+// }
 
-export const authMiddleware = (
-  req: AuthRequest,
+export const authMiddleware: RequestHandler = (
+  req: Request,
   res: Response,
   next: NextFunction,
 ) => {
